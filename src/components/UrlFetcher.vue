@@ -91,6 +91,9 @@
           }
           this.sourceCode = document.getElementById('myFrame').contentWindow.document.body.innerHTML;
           this.tagSummary = this.countWords(this.tags);
+          console.log(this.sourceCode);
+          console.log(this.tagSummary);
+          
         });
       },
       countWords (stringArr) {
