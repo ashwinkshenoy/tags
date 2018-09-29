@@ -9,14 +9,21 @@
 
     <div class="url-box line-header" data-content="Enter URL">
       <input type="text" placeholder="ex: https://" class="url-in-txt" v-model="url">
-      <button class="btn green-btn" @click="getDetails()">Go</button>
+      <button class="btn green-btn" type="submit" @click="getDetails">Go</button>
     </div>
 
     <br><br>
     <hr>
     <br><br>
 
-    <div class="summary line-header" data-content="Summary">
+    <div class="summary line-header" data-content="Error" v-show="fetchError">
+      <div class="text-center">
+        <div class="title">Oops, error occured!</div> 
+        <div class="desc">Please enter a valid URL</div>
+      </div>
+    </div>
+
+    <div class="summary line-header" data-content="Summary" v-show="!fetchError">
       <div class="text-center url-summary">
         <div class="title">Fetched URL:</div> 
         <div class="desc">{{ fetchedUrl }}</div>
@@ -31,7 +38,7 @@
 
     <br><br>
 
-    <div class="result-area">
+    <div class="result-area" v-show="!fetchError">
       <div class="tags line-header" data-content="Tags Used">
         <ul v-for="(tag, index) in tags" :key="index">
           <li>{{ tag }}</li>
@@ -49,18 +56,26 @@
 <script>
 export default {
   name: 'UrlFetcher',
+
   data() {
     return {
-      url: null,
-      fetchedUrl: null,
+      url: '',
+      fetchedUrl: '',
       sourceCode: null,
+      fetchError: false,
       tags: [],
       tagSummary: {},
     }
   },
+
   methods: {
-    getDetails() {
-      console.log(this.url);
+    getDetails() {      
+      if(!this.url) {        
+        this.fetchError = true;
+        return;
+      }
+      this.fetchError = false;
+      this.fetchedUrl = null;
       this.fetchedUrl = this.url;
       setTimeout(() => {
         this.fetchData();        
@@ -72,14 +87,9 @@ export default {
       this.tags = [];
       for (var i = 0, max = elems.length; i < max; i++) {
         this.tags.push(elems[i].tagName);
-        console.log(elems[i].tagName);
       }
       this.sourceCode = document.getElementById('myFrame').contentWindow.document.body.innerHTML;
-      console.log(this.tags);
-      console.log(this.sourceCode);
       this.tagSummary = this.countWords(this.tags);
-      console.log(this.tagSummary);
-      
     },
     countWords (stringArr) {
       return stringArr.reduce((count, word) => {
