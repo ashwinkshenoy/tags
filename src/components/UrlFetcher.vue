@@ -83,13 +83,15 @@ export default {
     },
     fetchData() {
       var iframe = document.getElementById("myFrame");
-      var elems = iframe.contentWindow.document.getElementsByTagName("*");
-      this.tags = [];
-      for (var i = 0, max = elems.length; i < max; i++) {
-        this.tags.push(elems[i].tagName);
-      }
-      this.sourceCode = document.getElementById('myFrame').contentWindow.document.body.innerHTML;
-      this.tagSummary = this.countWords(this.tags);
+      iframe.addEventListener('load', () => {
+        var elems = iframe.contentWindow.document.getElementsByTagName("*");
+        this.tags = [];
+        for (var i = 0, max = elems.length; i < max; i++) {
+          this.tags.push(elems[i].tagName);
+        }
+        this.sourceCode = document.getElementById('myFrame').contentWindow.document.body.innerHTML;
+        this.tagSummary = this.countWords(this.tags);
+      });
     },
     countWords (stringArr) {
       return stringArr.reduce((count, word) => {
