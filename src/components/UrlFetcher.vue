@@ -8,7 +8,7 @@
     <br><br>
 
     <div class="url-box line-header" data-content="Enter URL">
-      <input type="text" placeholder="ex: https://" class="url-in-txt" v-model="url">
+      <input type="text" placeholder="ex: https://ashwinshenoy.com" class="url-in-txt" v-model="url">
       <button class="btn green-btn" type="submit" @click="getDetails">Go</button>
     </div>
 
