@@ -54,53 +54,53 @@
 </template>
 
 <script>
-export default {
-  name: 'UrlFetcher',
+  export default {
+    name: 'UrlFetcher',
 
-  data() {
-    return {
-      url: '',
-      fetchedUrl: '',
-      sourceCode: null,
-      fetchError: false,
-      tags: [],
-      tagSummary: {},
-    }
-  },
-
-  methods: {
-    getDetails() {      
-      if(!this.url) {        
-        this.fetchError = true;
-        return;
+    data() {
+      return {
+        url: '',
+        fetchedUrl: '',
+        sourceCode: null,
+        fetchError: false,
+        tags: [],
+        tagSummary: {},
       }
-      this.fetchError = false;
-      this.fetchedUrl = null;
-      this.fetchedUrl = this.url;
-      setTimeout(() => {
-        this.fetchData();        
-      }, 500);
     },
-    fetchData() {
-      var iframe = document.getElementById("myFrame");
-      iframe.addEventListener('load', () => {
-        var elems = iframe.contentWindow.document.getElementsByTagName("*");
-        this.tags = [];
-        for (var i = 0, max = elems.length; i < max; i++) {
-          this.tags.push(elems[i].tagName);
-        }
-        this.sourceCode = document.getElementById('myFrame').contentWindow.document.body.innerHTML;
-        this.tagSummary = this.countWords(this.tags);
-      });
-    },
-    countWords (stringArr) {
-      return stringArr.reduce((count, word) => {
-        count[word] = (count[word] || 0) + 1;
-        return count;
-      }, {})
-    }
 
+    methods: {
+      getDetails() {      
+        if(!this.url) {        
+          this.fetchError = true;
+          return;
+        }
+        this.fetchError = false;
+        this.fetchedUrl = null;
+        this.fetchedUrl = this.url;
+        setTimeout(() => {
+          this.fetchData();        
+        }, 500);
+      },
+      fetchData() {
+        var iframe = document.getElementById("myFrame");
+        iframe.addEventListener('load', () => {
+          var elems = iframe.contentWindow.document.getElementsByTagName("*");
+          this.tags = [];
+          for (var i = 0, max = elems.length; i < max; i++) {
+            this.tags.push(elems[i].tagName);
+          }
+          this.sourceCode = document.getElementById('myFrame').contentWindow.document.body.innerHTML;
+          this.tagSummary = this.countWords(this.tags);
+        });
+      },
+      countWords (stringArr) {
+        return stringArr.reduce((count, word) => {
+          count[word] = (count[word] || 0) + 1;
+          return count;
+        }, {})
+      }
+
+    }
   }
-}
 </script>
 
