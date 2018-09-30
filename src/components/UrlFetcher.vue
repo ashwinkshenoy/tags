@@ -96,10 +96,6 @@
           this.tagsInner = document.getElementById('myFrame').contentWindow.document.getElementsByTagName("*");
           this.sourceCode = this.tagsInner[0].outerHTML;
           this.tagSummary = this.countWords(this.tags);
-          console.log(this.sourceCode);
-          console.log(this.tagsInner);
-          console.log(this.tagSummary);
-          
         });
       },
       countWords (stringArr) {
