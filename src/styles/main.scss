@@ -146,6 +146,9 @@ hr {
   .tags li.active {
     color: #48b04b;
   }
+  .source {
+    min-width: 600px;
+  }
   .source-sticky {
     position: sticky;
     top: 40px;
