@@ -139,4 +139,17 @@ hr {
     grid-row: 1;
     max-width: 600px;
   }
+  .tags li {
+    cursor: pointer;
+    margin: 15px 0;
+  }
+  .tags li.active {
+    color: #48b04b;
+  }
+  .source-sticky {
+    position: sticky;
+    top: 40px;
+    height: 0%;
+    display: block;
+  }
 }

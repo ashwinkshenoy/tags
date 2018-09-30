@@ -38,15 +38,17 @@
 
     <br><br>
 
-    <div class="result-area" v-show="!fetchError">
-      <div class="tags line-header" data-content="Tags Used">
-        <ul v-for="(tag, index) in tags" :key="index">
-          <li>{{ tag }}</li>
-        </ul>
-      </div>
-      <div class="source line-header" data-content="Source">
-        <pre v-highlightjs="sourceCode" v-if="sourceCode"><code class="html"></code></pre>
-        <iframe id="myFrame" :src="fetchedUrl" style="display: none;"></iframe>
+    <div>
+      <div class="result-area" v-show="!fetchError">
+        <div class="tags line-header" data-content="Tags Used">
+          <ul>
+            <li @click="fetchInner(index, tag)" v-for="(tag, index) in tags" :key="index" :class="{'active': active == index}">{{ tag }}</li>
+          </ul>
+        </div>
+        <div class="source line-header" data-content="Source">
+          <pre v-highlightjs="sourceCode" v-if="sourceCode" class="source-sticky"><code class="html css js"></code></pre>
+          <iframe id="myFrame" :src="fetchedUrl" style="display: none;"></iframe>
+        </div>
       </div>
     </div>
 
@@ -65,6 +67,8 @@
         fetchError: false,
         tags: [],
         tagSummary: {},
+        tagInner: [],
+        active: '',
       }
     },
 
@@ -89,10 +93,9 @@
           for (var i = 0, max = elems.length; i < max; i++) {
             this.tags.push(elems[i].tagName);
           }
-          this.sourceCode = document.getElementById('myFrame').contentWindow.document.body.innerHTML;
+          this.tagsInner = document.getElementById('myFrame').contentWindow.document.getElementsByTagName("*");
+          this.sourceCode = this.tagsInner[0].outerHTML;
           this.tagSummary = this.countWords(this.tags);
-          console.log(this.sourceCode);
-          console.log(this.tagSummary);
           
         });
       },
@@ -101,6 +104,13 @@
           count[word] = (count[word] || 0) + 1;
           return count;
         }, {})
+      },
+      fetchInner(index, tag) {
+        this.sourceCode = this.tagsInner[index].outerHTML;
+        this.active = index;
+        if(!this.sourceCode) {
+          this.sourceCode = `${tag}: is an empty tag`
+        }
       }
 
     }
