@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "deploy": "yarn build && git subtree push --prefix dist origin gh-pages",
-    "deploy-2": "yarn build && git push origin :gh-pages && git subtree push --prefix dist origin gh-pages"
+    "deploy2": "yarn build && git push origin :gh-pages && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
     "vue": "^2.5.17",

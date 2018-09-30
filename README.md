@@ -1,4 +1,4 @@
-# tact
+# How to run the project
 
 ## Project setup
 ```
@@ -14,3 +14,5 @@ yarn run serve
 ```
 yarn run build
 ```
+
+Due to CORS issue sometimes certain websites may not load!
